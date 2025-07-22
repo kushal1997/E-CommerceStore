@@ -24,7 +24,7 @@ pipeline {
                             sh """
                                 echo "🔨 Building ${service}..."
                                 docker build -t ${DOCKERHUB_USER}/e-commerce:${service} .
-                                echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                                echo "$DOCKERHUB_PASS" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                                 docker push ${DOCKERHUB_USER}/e-commerce:${service}
                             """
                         }
@@ -34,7 +34,7 @@ pipeline {
                     sh """
                         echo "🔨 Building frontend..."
                         docker build -t ${DOCKERHUB_USER}/e-commerce:frontend-new-prod .
-                        echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                        echo "$DOCKERHUB_PASS" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                         docker push ${DOCKERHUB_USER}/e-commerce:frontend-new-prod
                     """
                     }
