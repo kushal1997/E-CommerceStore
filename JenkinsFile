@@ -16,7 +16,7 @@ pipeline {
     stage('Build & Push Docker Images') {
         steps {
             script {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred-k', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
                     def services = ['user-service', 'product-service', 'cart-service', 'order-service']
 
                     services.each { service ->
