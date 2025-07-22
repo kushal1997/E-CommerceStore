@@ -2,9 +2,11 @@ pipeline {
   agent any
 
   environment {
-    AWS_REGION = 'ap-northeast-3'
-    EKS_CLUSTER_NAME = 'noizy-ecom-v2'
-  }
+        AWS_REGION = 'ap-northeast-3'
+        EKS_CLUSTER_NAME = 'noizy-ecom-v2'
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
 
   stages {
     stage('Clone Code') {
@@ -44,12 +46,19 @@ pipeline {
     }
 
     stage('Configure EKS') {
-      steps {
-        sh "aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}"
-      }
+        steps {
+            withEnv([
+            "AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}",
+            "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}",
+            "AWS_DEFAULT_REGION=${AWS_REGION}"
+            ]) {
+            sh "aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}"
+            }
+        }
     }
 
-    
+
+
   }
 
   post {
