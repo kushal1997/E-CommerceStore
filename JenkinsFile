@@ -1,5 +1,9 @@
 pipeline {
   agent any
+  
+  triggers {
+    githubPush()
+  }
 
   environment {
         AWS_REGION = 'ap-northeast-3'
@@ -65,7 +69,7 @@ pipeline {
     //         sh 'pwd'
     //     }
     // }
-    
+
     stage('Deploy to EKS') {
       steps {
         sh "kubectl apply -f K8s/"
