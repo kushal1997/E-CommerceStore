@@ -33,9 +33,9 @@ pipeline {
                     dir("frontend") {
                     sh """
                         echo "🔨 Building frontend..."
-                        docker build -t ${DOCKERHUB_USER}/frontend:latest .
+                        docker build -t ${DOCKERHUB_USER}/e-commerce:frontend-new-prod .
                         echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                        docker push ${DOCKERHUB_USER}/frontend:latest
+                        docker push ${DOCKERHUB_USER}/e-commerce:frontend-new-prod
                     """
                     }
                 }
