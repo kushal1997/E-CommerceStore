@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Clone Code') {
       steps {
-        git url: 'https://github.com/kushal1997/E-CommerceStore.git', branch: 'testing'
+        git url: 'https://github.com/kushal1997/E-CommerceStore.git', branch: 'main'
       }
     }
 
