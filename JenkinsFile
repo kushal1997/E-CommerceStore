@@ -57,16 +57,18 @@ pipeline {
             }
         }
     }
-    stage('Debug') {
-        steps {
-            sh 'ls -al'
-            sh 'ls -R'
-            sh 'pwd'
-        }
-    }
+
+    // stage('Debug') {
+    //     steps {
+    //         sh 'ls -al'
+    //         sh 'ls -R'
+    //         sh 'pwd'
+    //     }
+    // }
+    
     stage('Deploy to EKS') {
       steps {
-        sh "kubectl apply -f k8s/"
+        sh "kubectl apply -f K8s/"
       }
     }
 
