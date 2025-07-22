@@ -42,6 +42,14 @@ pipeline {
             }
         }
     }
+
+    stage('Configure EKS') {
+      steps {
+        sh "aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}"
+      }
+    }
+
+    
   }
 
   post {
