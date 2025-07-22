@@ -19,7 +19,7 @@ Deploy a fully containerized microservices-based e-commerce app on AWS EKS using
 
 ## 🗓️ Step-by-Step Breakdown
 
-### 🗕️ **Step 1: Local Setup**
+### ✅ **Step 1: Local Setup**
 
 - Cloned and ran the full-stack e-commerce app locally.
 - Verified all 4 backend microservices (User, Product, Cart, Order).
@@ -33,7 +33,7 @@ Deploy a fully containerized microservices-based e-commerce app on AWS EKS using
 
 ---
 
-### 🗕️ **Step 2: Dockerization**
+### ✅ **Step 2: Dockerization**
 
 - Created Dockerfiles for each backend service + frontend.
 - Built and tested Docker images locally.
@@ -60,7 +60,7 @@ Deploy a fully containerized microservices-based e-commerce app on AWS EKS using
 
 ---
 
-### 🗕️ **Step 3: Kubernetes on AWS EKS**
+### ✅ **Step 3: Kubernetes on AWS EKS**
 
 - Created EKS cluster: `noizy-ecom-v2` (ap-northeast-3)
 - Created Deployments + Services for all services + MongoDB using PVC
@@ -121,7 +121,7 @@ kubectl apply -f frontend.yaml
 
 ---
 
-### 🗕️ **Step 4: Jenkins CI/CD Pipeline**
+### ✅ **Step 4: Jenkins CI/CD Pipeline**
 
 - Setup Jenkins on EC2 with Docker, AWS CLI, kubectl
 - Created Jenkins pipeline for auto-deployment:
