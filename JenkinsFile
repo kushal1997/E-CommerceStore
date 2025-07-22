@@ -1,0 +1,55 @@
+pipeline {
+  agent any
+
+  environment {
+    AWS_REGION = 'ap-northeast-3'
+    EKS_CLUSTER_NAME = 'noizy-ecom-v2'
+  }
+
+  stages {
+    stage('Clone Code') {
+      steps {
+        git url: 'https://github.com/kushal1997/E-CommerceStore.git', branch: 'testing'
+      }
+    }
+
+    stage('Build & Push Docker Images') {
+        steps {
+            script {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+                    def services = ['user-service', 'product-service', 'cart-service', 'order-service']
+
+                    services.each { service ->
+                        dir("backend/${service}") {
+                            sh """
+                                echo "🔨 Building ${service}..."
+                                docker build -t ${DOCKERHUB_USER}/e-commerce:${service} .
+                                echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                                docker push ${DOCKERHUB_USER}/e-commerce:${service}
+                            """
+                        }
+                    }
+
+                    dir("frontend") {
+                    sh """
+                        echo "🔨 Building frontend..."
+                        docker build -t ${DOCKERHUB_USER}/frontend:latest .
+                        echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                        docker push ${DOCKERHUB_USER}/frontend:latest
+                    """
+                    }
+                }
+            }
+        }
+    }
+  }
+
+  post {
+    success {
+      echo ' Deployed successfully!'
+    }
+    failure {
+      echo 'Deployment failed. Check logs.'
+    }
+  }
+}
